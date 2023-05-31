@@ -1,9 +1,10 @@
 all:
 	lex lexer.l
-	yacc compiler.y
-	gcc y.tab.c lex.yy.c -ly -ll -o compiler
+	yacc -dy compiler.y
+	gcc lex.yy.c y.tab.c -ly -ll -o compiler.out
 
 clean:
 	rm -rf y.tab.c
 	rm -rf y.tab.h
 	rm -rf lex.yy.c
+	rm -rf compiler.out
