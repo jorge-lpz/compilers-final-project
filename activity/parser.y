@@ -5,6 +5,7 @@
 
 extern int yylex(void);
 void yyerror(const char* s);
+extern FILE* yyin;
 
 %}
 
@@ -26,15 +27,16 @@ void yyerror(const char* s);
 
 program : statement '\n' { return 0; }
         | program '\n'
+        | statement { return 0; }
         ;
 
 statement : WORD WORD WORD WORD WORD FILENAME WORD conditions
-          {
-              printf("import pandas as pd\n");
-              printf("df = pd.read_csv('%s')\n", $6);
-              printf("df = df[%s]\n", $8);
-          }
-          ;
+            {
+                printf("import pandas as pd\n");
+                printf("df = pd.read_csv('%s')\n", $6);
+                printf("df = df[%s]\n", $8);
+            }
+            ;
 
 conditions : condition AND conditions
            {
@@ -65,7 +67,15 @@ void yyerror(const char* s) {
     fprintf(stderr, "Error: %s\n", s);
 }
 
-int main() {
-    yyparse();
-    return 0;
+int main(int argc, char** argv) {
+     if(argc==2)
+     {
+         yyin = fopen(argv[1], "r");
+         if(!yyin)
+         {
+             fprintf(stderr, "can't read file %s\n", argv[1]);
+             return 1;
+         }
+     }
+     yyparse();
 }

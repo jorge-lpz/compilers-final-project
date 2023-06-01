@@ -11,6 +11,7 @@
 [a-zA-Z][a-zA-Z_0-9_-]*\.csv    { yylval.str = strdup(yytext); return FILENAME; }
 [a-zA-Z]+                       { yylval.str = strdup(yytext); return WORD; }
 \n                              { return '\n'; }
+[ \t]+   ;
 
 %%
 
