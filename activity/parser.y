@@ -20,6 +20,7 @@ extern FILE* yyin;
 %token MORE
 %token LESS
 %token AND
+%token OR
 
 %type <str> statement conditions condition
 
@@ -42,6 +43,12 @@ conditions : condition AND conditions
            {
                char* conditions_str = malloc(strlen($1) + strlen($3) + 7);
                sprintf(conditions_str, "%s & %s", $1, $3);
+               $$ = conditions_str;
+           }
+           | condition OR conditions
+           {
+               char* conditions_str = malloc(strlen($1) + strlen($3) + 7);
+               sprintf(conditions_str, "%s or %s", $1, $3);
                $$ = conditions_str;
            }
            | condition
