@@ -26,7 +26,7 @@ make
 ./parser.out input.txt
 ```
 
-The above commands will generate Python code based on the query in `input.txt`.
+The above commands will generate Python code based on the query in `input.txt`. These commands must also be run from the `/activity` folder.
 
 ### Cleanup
 
